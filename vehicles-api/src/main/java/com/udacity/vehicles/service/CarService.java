@@ -23,7 +23,6 @@ import org.springframework.web.client.RestTemplate;
 public class CarService {
 
     private final CarRepository repository;
-    private final MapsClient mapsClient;
     private final PriceClient priceClient;
 
     public CarService(CarRepository repository, MapsClient mapsClient, PriceClient priceClient) {
@@ -32,7 +31,6 @@ public class CarService {
          *   in `VehiclesApiApplication` as arguments and set them here.
          */
         this.repository = repository;
-        this.mapsClient = mapsClient;
         this.priceClient = priceClient;
     }
 
