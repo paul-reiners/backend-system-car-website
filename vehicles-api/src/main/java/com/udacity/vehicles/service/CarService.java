@@ -1,5 +1,6 @@
 package com.udacity.vehicles.service;
 
+import com.udacity.vehicles.client.maps.Address;
 import com.udacity.vehicles.client.maps.MapsClient;
 import com.udacity.vehicles.client.prices.PriceClient;
 import com.udacity.vehicles.domain.car.Car;
@@ -7,7 +8,11 @@ import com.udacity.vehicles.domain.car.CarRepository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Implements the car service create, read, update or delete
@@ -67,14 +72,22 @@ public class CarService {
         car.setPrice(price);
 
         /**
-         * TODO: Use the Maps Web client you create in `VehiclesApiApplication`
+         * Use the Maps Web client you create in `VehiclesApiApplication`
          *   to get the address for the vehicle. You should access the location
          *   from the car object and feed it to the Maps service.
-         * TODO: Set the location of the vehicle, including the address information
+         * Set the location of the vehicle, including the address information
          * Note: The Location class file also uses @transient for the address,
          * meaning the Maps service needs to be called each time for the address.
          */
-        car.getLocation();
+        double lat = car.getLocation().getLat();
+        double lon = car.getLocation().getLat();
+        RestTemplate restTemplate = new RestTemplate();
+        String fooResourceUrl
+                = String.format("http://localhost:9191/maps?lat=%f&lon=%f", lat, lon);
+        ResponseEntity<Address> response
+                = restTemplate.getForEntity(fooResourceUrl + "/1", Address.class);
+        Address address = response.getBody();
+        car.setAddress(address);
 
         return car;
     }

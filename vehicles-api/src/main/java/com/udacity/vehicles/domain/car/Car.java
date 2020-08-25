@@ -1,5 +1,6 @@
 package com.udacity.vehicles.domain.car;
 
+import com.udacity.vehicles.client.maps.Address;
 import com.udacity.vehicles.domain.Condition;
 import com.udacity.vehicles.domain.Location;
 import java.time.LocalDateTime;
@@ -48,6 +49,7 @@ public class Car {
 
     @Transient
     private String price;
+    private Address address;
 
     public Long getId() {
         return id;
@@ -103,5 +105,13 @@ public class Car {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Address getAddress() {
+        return address;
     }
 }
